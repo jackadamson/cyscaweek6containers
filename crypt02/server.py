@@ -66,11 +66,11 @@ def handle_client(conn, addr):
 # TODO: Define the chroot user and group here
 helpers.initialize_chroot(2004, 1005)
 
-print("Starting up simple crypto challenge")
+print "Starting up simple crypto challenge"
 listensock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 listensock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 listensock.bind(("0.0.0.0", 9999))
-print("Listening on port 9999")
+print "Listening on port 9999"
 
 # We dont care for zombies
 signal.signal(signal.SIGCHLD, signal.SIG_IGN)
@@ -78,11 +78,11 @@ signal.signal(signal.SIGCHLD, signal.SIG_IGN)
 listensock.listen(1)
 while True:
     (conn, address) = listensock.accept()
-    print("Connection accepted from", address)
+    print "Connection accepted from", address
     try:
         pid = os.fork()
     except:
-        print("Error occurred when forking. Ignoring")
+        print "Error occurred when forking. Ignoring"
         continue
 
     if pid == 0:
@@ -91,7 +91,7 @@ while True:
 
     else:
         # Parent process - Continue accepting connections
-        print("Forking off child process PID=%d" % pid)
+        print "Forking off child process PID=%d" % pid
         # Close the connected socket in the parent process
         conn.close()
         continue

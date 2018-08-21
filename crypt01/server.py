@@ -10,7 +10,7 @@ import helpers
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
-print("HOSTADD ",s.getsockname()[0]," crypto1.cysca")
+print "HOSTADD ",s.getsockname()[0]," crypto1.cysca"
 s.close()
 
 def shuffle_plain(plain):
@@ -19,7 +19,7 @@ def shuffle_plain(plain):
     return ''.join(plain)
 
 def execute_command(command,plain,coded):
-    print("Running command: bash %s" % command)
+    print "Running command: bash %s" % command
     proc = subprocess.Popen(("/bin/bash","-c",command),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     proc.wait()
     stdoutdata = proc.stdout.read()
@@ -76,11 +76,11 @@ def handle_client(connection,addr):
 #TODO: Define the chroot user and group here
 # helpers.initialize_chroot(2003,1004)
 
-print("Starting up simple crypto challenge")
+print "Starting up simple crypto challenge"
 listensock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 listensock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 listensock.bind(("0.0.0.0",12433))
-print("Listening on port 12433")
+print "Listening on port 12433"
 
 #We dont care for zombies
 # signal.signal(signal.SIGCHLD,signal.SIG_IGN)
@@ -88,11 +88,11 @@ print("Listening on port 12433")
 listensock.listen(1)
 while True:
     (conn,address) = listensock.accept()
-    print("Connection accepted from",address)
+    print "Connection accepted from",address
     try:
         pid = os.fork()
     except:
-        print("Error occurred when forking. Ignoring")
+        print "Error occurred when forking. Ignoring"
         continue
         
     if pid == 0:
@@ -101,7 +101,7 @@ while True:
         os._exit(0)
     else:
         #Parent process - Continue accepting connections
-        print("Forking off child process PID=%d" % pid)
+        print "Forking off child process PID=%d" % pid
         continue
 
 listensock.close()   
